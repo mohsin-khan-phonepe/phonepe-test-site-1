@@ -1,0 +1,138 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Redirect Buttons</title>
+<style>
+  body {
+    font-family: Arial, sans-serif;
+    text-align: center;
+  }
+  h1 {
+    color: #333;
+  }
+  p {
+    color: #666;
+  }
+  .btn {
+    display: inline-block;
+    margin: 10px;
+    padding: 10px 20px;
+    background-color: #007bff;
+    color: #fff;
+    text-decoration: none;
+    border-radius: 5px;
+    cursor: pointer;
+  }
+  .btn:hover {
+    background-color: #0056b3;
+  }
+</style>
+</head>
+<body>
+  <h1>Redirect Buttons</h1>
+  <p>Click on the buttons below to redirect:</p>
+  
+  <button class="btn" onclick="redirectTo('https://www.google.com/')">Google</button>
+  <button class="btn" onclick="redirectTo('https://hdfc-loan-disbursed.phonepe.com?state=SUCCESS')">HDFC-Success</button>
+  <button class="btn" onclick="redirectTo('https://hdfc-loan-disbursed.phonepe.com?state=REJECTED')">HDFC-Failure</button>
+  <button class="btn" onclick="redirectTo('https://kmohsin11.github.io/dummy-website/')">Open Personal Website</button>
+  <button onclick="window.open('https://www.google.com/', '_blank')">New tab</button>
+  <button onclick="openAndCloseWindow()">New window</button>
+
+  <h2>Testing Dropdown</h2>
+
+  <select id="dropdown">
+      <option value="item1">Item 1</option>
+      <option value="item2">Item 2</option>
+      <option value="item3">Item 3</option>
+      <option value="item4">Item 4</option>
+      <option value="item5">Item 5</option>
+  </select>
+
+  <button class="btn" onclick="openCamera()">Open Camera</button>
+
+  <button class="btn" onclick="openFileSelect()">Open File Select</button>
+
+   <button class="btn" onclick="requestCameraAccess()">Request Camera Access</button>
+
+  <button class="btn" onclick="requestAppDetails()">Request App Details</button>
+
+  <!-- Camera Button -->
+<input type="file" accept="image/*" capture="camera" id="cameraInput" style="display: none;">
+<button onclick="document.getElementById('cameraInput').click()">Take Photo - HTML - 2</button>
+
+<!-- Gallery Button -->
+<input type="file" accept="image/*" id="galleryInput" style="display: none;">
+<button onclick="document.getElementById('galleryInput').click()">Choose from Gallery  - HTML</button>
+  
+  <script src="bundle.js"></script>
+  <script>
+    var sdk;
+    PhonePe.PhonePe.build(PhonePe.Constants.Species.web)
+        .then(ppSdk => {
+            sdk = ppSdk;
+            alert('PhonePe SDK initialized successfully');
+        })
+        .catch(error => {
+            alert(error);
+        });
+  </script>
+  <script>
+    function redirectTo(url) {
+      window.location.href = url;
+    }
+
+    function openCamera() {
+      sdk.startCamera().then((uri) => {
+    		alert(uri)
+        sdk.readFile(uri, 0, 100).then((readFileRes) => {
+          alert(readFileRes)
+        }).catch((err) => {
+          alert(err)
+        })
+    	}).catch((err) => {
+    		alert(err)
+    	})
+      
+    }
+
+    function openFileSelect() {
+      sdk.selectFile('document', false).then((data) => {
+    		alert(data)
+    	}).catch((err) => {
+    		alert(err)
+    	})
+    }
+
+    function requestCameraAccess() {
+      sdk.seekPermission([PhonePe.Constants.Permission.CAMERA]).then((data) => {
+    		alert(data)
+    	}).catch((err) => {
+    		alert(err)
+    	})
+    }
+
+    function requestAppDetails() {
+      sdk.getAppDetails().then((data) => {
+    		alert(data)
+    	}).catch((err) => {
+    		alert(err)
+    	})
+    }
+
+    function openAndCloseWindow() {
+            // Open a new window
+            const newWindow = window.open('https://mohsin-khan-phonepe.github.io/phonepe-test-site/', '_blank', 'width=500,height=500');
+            
+            // Set a timeout to close the window after 5 seconds (5000 milliseconds)
+            setTimeout(() => {
+                if (newWindow) {
+                    newWindow.close();
+                }
+            }, 5000);
+        }
+  </script>
+</body>
+</html>
