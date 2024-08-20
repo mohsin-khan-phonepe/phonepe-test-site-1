@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Redirect Buttons</title>
+<title>Test Website - 1</title>
 <style>
   body {
     font-family: Arial, sans-serif;
@@ -36,6 +36,7 @@
   
   <button onclick="window.open('https://www.google.com/', '_blank')">New tab</button>
   <button onclick="openAndCloseWindow()">New window</button>
+  <button onclick="closeWindow()">Close Window</button>
 
   <button class="btn" onclick="openCamera()">Open Camera</button>
 
@@ -118,6 +119,10 @@
                     newWindow.close();
                 }
             }, 5000);
+        }
+
+    function closeWindow() {
+            window.close();
         }
   </script>
 </body>
